@@ -740,11 +740,13 @@ namespace OutlookPrivacyPlugin
 
 			DecryptAndVerifyHeaderMessage += "\n\n";
 
-			if (mailItem.BodyFormat == Outlook.OlBodyFormat.olFormatPlain)
+            DecryptAndVerifyHeaderMessage = "";
+
+			if (mailItem.BodyFormat == Outlook.OlBodyFormat.olFormatPlain && !msg.Body.TrimStart().ToLower().StartsWith("<html"))
 			{
 				mailItem.Body = DecryptAndVerifyHeaderMessage + msg.Body;
 			}
-			else if (mailItem.BodyFormat == Outlook.OlBodyFormat.olFormatHTML)
+			else if (mailItem.BodyFormat == Outlook.OlBodyFormat.olFormatHTML || msg.Body.TrimStart().ToLower().StartsWith("<html"))
 			{
 				if (!msg.Body.TrimStart().ToLower().StartsWith("<html"))
 				{
